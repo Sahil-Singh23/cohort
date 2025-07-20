@@ -23,13 +23,30 @@
 //   ctr--;
 // }
 
-let todos = [];
+var todos = [];
 
 function addTodo() {
-  let val = document.querySelector("input").value;
+  var val = document.querySelector("input").value;
   todos.push({ title: val });
   document.querySelector("input").value = "";
   render();
 }
 
-function render() {}
+function render() {
+  document.getElementById("todos").innerHTML = ""; // Clear existing todos
+  todos.forEach((element, index) => {
+    var ele = document.createElement("div");
+    var inner = document.createElement("span");
+    inner.innerHTML = element.title;
+    var button = document.createElement("button");
+    button.innerHTML = "Done";
+    button.setAttribute("onclick", "delTodo(" + index + ")");
+    ele.appendChild(inner);
+    ele.appendChild(button);
+    document.getElementById("todos").appendChild(ele);
+  });
+}
+function delTodo(index) {
+  todos.splice(index, 1);
+  render();
+}
