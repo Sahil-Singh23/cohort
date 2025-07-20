@@ -14,6 +14,7 @@ body {
 #topBar {
   text-align: center;
   margin-bottom: 30px;
+  position: relative;
 }
 
 #topBar h1 {
@@ -22,6 +23,18 @@ body {
   letter-spacing: 8px;
   color: white;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.total {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 #todos {
