@@ -36,7 +36,7 @@ function render() {
   document.getElementById("todos").innerHTML = ""; // Clear existing todos
   todos.forEach((element, index) => {
     var ele = document.createElement("div");
-    var inner = document.createElement("span");
+    var inner = document.createElement("h1");
     inner.innerHTML = element.title;
     var button = document.createElement("button");
     button.innerHTML = "Done";
