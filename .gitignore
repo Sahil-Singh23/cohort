@@ -1,0 +1,23 @@
+# Ignore all node_modules folders recursively
+node_modules/
+
+# Ignore lock files if you don't want to commit them (optional)
+package-lock.json
+yarn.lock
+
+# Ignore env and log files
+.env
+*.log
+
+# Ignore build or output folders (optional)
+dist/
+build/
+.cache/
+
+# Ignore IDE/editor configs
+.vscode/
+.idea/
+
+# Mac & Windows system files
+.DS_Store
+Thumbs.db
