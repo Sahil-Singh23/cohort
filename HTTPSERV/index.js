@@ -1,13 +1,10 @@
 const express = require("express");
-const loggerMiddlware = require("logger");
 
 const app = express();
 
-app.use(loggerMiddlware);
-
 app.post("/sum", function (req, res) {
   const a = parseInt(req.body.a);
-  const b = parseInt(req.body.a);
+  const b = parseInt(req.body.b);
 
   res.json({ a: a, b: b, sum: a + b });
 });
