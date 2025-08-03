@@ -34,6 +34,15 @@ app.get("/users", (req, res) => {
   res.json(users);
 });
 
+// Get user by ID
+app.get("/users/:id", (req, res) => {
+  const user = users.find((u) => u.id === parseInt(req.params.id));
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.json(user);
+});
+
 // Add new user
 app.post("/users", (req, res) => {
   const { name, age } = req.body;
