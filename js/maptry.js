@@ -4,3 +4,10 @@ const ans = input.map((i) => {
 });
 
 console.log(ans);
+
+const ans2 = input.filter((i) => {
+  if (i % 2 == 0) return true;
+  return false;
+});
+
+console.log(ans2);
