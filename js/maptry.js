@@ -1,13 +1,19 @@
-const input = [2, 3, 4, 5, 6, 7];
-const ans = input.map((i) => {
-  return i * 2;
-});
+function main() {
+  fetch("https://jsonplaceholder.typicode.com/comments/1").then(
+    async (response) => {
+      const json = await response.json();
+      console.log(json);
+    }
+  );
+}
 
-console.log(ans);
+async function ax() {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/comments/2"
+  );
+  const json = await response.json();
+  console.log(json);
+}
 
-const ans2 = input.filter((i) => {
-  if (i % 2 == 0) return true;
-  return false;
-});
-
-console.log(ans2);
+main();
+ax();
