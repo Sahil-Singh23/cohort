@@ -1,11 +1,4 @@
-function main() {
-  fetch("https://jsonplaceholder.typicode.com/comments/1").then(
-    async (response) => {
-      const json = await response.json();
-      console.log(json);
-    }
-  );
-}
+const axios = require("axios");
 
 async function ax() {
   const response = await fetch(
@@ -15,5 +8,5 @@ async function ax() {
   console.log(json);
 }
 
-main();
+nex();
 ax();
