@@ -107,4 +107,16 @@ app.post("/signin", (req, res) => {
   }
 });
 
+app.get("/me", (req, res) => {
+  let token = req.headers.token;
+
+  let user = users.find((u) => u.token == token);
+
+  if (user) {
+    res.json({ username: user.username, password: user.password });
+  } else {
+    res.status(401).json({ message: "invalid token" });
+  }
+});
+
 app.listen(443);
