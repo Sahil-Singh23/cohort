@@ -43,9 +43,9 @@ app.post("/signin", (req, res) => {
 
 app.get("/me", (req, res) => {
   let token = req.headers.token;
-  let userName = jwt.verify(token, JWT_SECRET);
+  let decodedToken = jwt.verify(token, JWT_SECRET);
 
-  let user = users.find((u) => u.username == userName);
+  let user = users.find((u) => u.username == decodedToken.username);
 
   if (user) {
     res.json({ username: user.username, password: user.password });
