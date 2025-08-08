@@ -5,6 +5,18 @@ const app = express();
 const JWT_SECRET = "HELLOSAHILSINGH";
 let users = [];
 
+const auth = (req, res, next) => {
+  const token = req.headers.token;
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(token, JWT_SECRET);
+    req.user = decodedToken;
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: "Invalid Token" });
+  }
+};
+
 app.use(express.json());
 app.post("/signup", (req, res) => {
   const username = req.body.username;
@@ -36,20 +48,13 @@ app.post("/signin", (req, res) => {
   }
 });
 
-app.get("/me", (req, res) => {
-  const token = req.headers.token;
-  let decodedToken;
-  try {
-    decodedToken = jwt.verify(token, JWT_SECRET);
-  } catch (err) {
-    return res.status(403).json({ message: "invalid token" });
-  }
-  const user = users.find((u) => u.username === decodedToken.username);
+app.get("/me", auth, (req, res) => {
+  const user = users.find((u) => u.username === req.user.username);
 
   if (user) {
     res.json({ username: user.username, email: user.email });
   } else {
-    res.status(403).json({ message: "invalid token" });
+    res.status(403).json({ message: "user not found " });
   }
 });
 
