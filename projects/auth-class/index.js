@@ -39,7 +39,7 @@ app.post("/signup", (req, res) => {
     password: password,
     email: email,
   });
-  console.log("sign up done");
+  console.log("sign up done ");
   res.json({ message: "you are signed up" });
 });
 
