@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 const JWT_SECRET = "HELLOSAHILSINGH";
+
 let users = [];
 
 const auth = (req, res, next) => {
@@ -27,6 +28,10 @@ app.get("/signup", (req, res) => {
 
 app.get("/signin", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "signin.html"));
+});
+
+app.get("/dash", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "dash.html"));
 });
 
 app.post("/signup", (req, res) => {
@@ -53,6 +58,7 @@ app.post("/signin", (req, res) => {
 
   if (user) {
     const token = jwt.sign({ username: user.username }, JWT_SECRET);
+    console.log("sign in done ");
     res.json({ token: token });
   } else {
     res.status(401).json({ message: "invalid username or password " });
@@ -63,7 +69,11 @@ app.get("/me", auth, (req, res) => {
   const user = users.find((u) => u.username === req.user.username);
 
   if (user) {
-    res.json({ username: user.username, email: user.email });
+    res.json({
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    });
   } else {
     res.status(403).json({ message: "user not found " });
   }
