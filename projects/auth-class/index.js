@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const jwt = require("jsonwebtoken");
 
 const app = express();
@@ -18,6 +19,16 @@ const auth = (req, res, next) => {
 };
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/signup", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "signup.html"));
+});
+
+app.get("/signin", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "signin.html"));
+});
+
 app.post("/signup", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -28,7 +39,7 @@ app.post("/signup", (req, res) => {
     password: password,
     email: email,
   });
-
+  console.log("sign up done");
   res.json({ message: "you are signed up" });
 });
 
