@@ -57,7 +57,9 @@ app.post("/signin", (req, res) => {
   );
 
   if (user) {
-    const token = jwt.sign({ username: user.username }, JWT_SECRET);
+    const token = jwt.sign({ username: user.username }, JWT_SECRET, {
+      expiresIn: "30d",
+    });
     console.log("sign in done ");
     res.json({ token: token });
   } else {
