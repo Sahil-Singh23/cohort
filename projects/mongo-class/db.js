@@ -16,3 +16,13 @@ const todo = new Schema({
   done: boolean,
   userId: ObjectId,
 });
+
+//now we need a model
+
+const UserModel = mongoose.model("users", user);
+const TodoModel = mongoose.model("todos", todo);
+
+module.exports = {
+  UserModel: UserModel,
+  TodoModel: TodoModel,
+};
