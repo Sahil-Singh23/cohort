@@ -3,7 +3,8 @@ const path = require("path");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const JWT_SECRET = "HELLOSAHILSINGH";
+require("dotenv").config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 let users = [];
 
@@ -22,7 +23,7 @@ const auth = (req, res, next) => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/signup", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "signup.html"));
 });
 
@@ -74,7 +75,6 @@ app.get("/me", auth, (req, res) => {
     res.json({
       username: user.username,
       email: user.email,
-      password: user.password,
     });
   } else {
     res.status(403).json({ message: "user not found " });
