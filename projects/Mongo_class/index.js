@@ -1,7 +1,14 @@
 const express = require("express");
 const { UserModel, TodoModel } = require("./db");
-const app = express();
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const JWT_SECRET = "shjkadsadhjkasd";
 
+mongoose.connect(
+  "mongodb+srv://sahilhere13:pqgm8df89STsDbm6@cluster0.qa2ap9y.mongodb.net/Todos-app-database"
+);
+
+const app = express();
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
@@ -18,7 +25,25 @@ app.post("/signup", async (req, res) => {
   res.json({ message: "You are signed up " });
 });
 
-app.post("/signin", (req, res) => {});
+app.post("/signin", async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await UserModel.findOne({
+    email: email,
+    password: password,
+  });
+
+  console.log(user);
+
+  if (user) {
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
+
+    res.json({ message: "you are signed in", token: token });
+  } else {
+    res.status(403).json({ message: "Invalid credentials" });
+  }
+});
 
 app.post("/todos", (req, res) => {});
 
