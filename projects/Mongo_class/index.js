@@ -2,11 +2,11 @@ const express = require("express");
 const { UserModel, TodoModel } = require("./db");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const JWT_SECRET = "shjkadsadhjkasd";
+require("dotenv").config();
 
-mongoose.connect(
-  "mongodb+srv://sahilhere13:pqgm8df89STsDbm6@cluster0.qa2ap9y.mongodb.net/Todos-app-database"
-);
+const JWT_SECRET = process.env.JWT_SECRET;
+
+mongoose.connect(process.env.DB_URL);
 
 const app = express();
 app.use(express.json());
