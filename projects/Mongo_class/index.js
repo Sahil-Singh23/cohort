@@ -45,8 +45,28 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-app.post("/todos", (req, res) => {});
+const auth = (req, res, next) => {
+  const token = req.headers.token;
+  const decodedData = jwt.verify(token, JWT_SECRET);
 
-app.get("/todos", (req, res) => {});
+  if (decodedData) {
+    req.userId = decodedData.id;
+    next();
+  } else {
+    res.status(403).json({ message: "You are not logged in" });
+  }
+};
+
+app.post("/todo", auth, (req, res) => {
+  const userId = req.userId;
+
+  res.json({ userId: userId });
+});
+
+app.get("/todos", auth, (req, res) => {
+  const userId = req.userId;
+
+  res.json({ userId: userId });
+});
 
 app.listen(3000);
