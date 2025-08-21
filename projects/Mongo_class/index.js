@@ -57,16 +57,8 @@ const auth = (req, res, next) => {
   }
 };
 
-app.post("/todo", auth, (req, res) => {
-  const userId = req.userId;
+app.post("/todo", auth, (req, res) => {});
 
-  res.json({ userId: userId });
-});
-
-app.get("/todos", auth, (req, res) => {
-  const userId = req.userId;
-
-  res.json({ userId: userId });
-});
+app.get("/todos", auth, (req, res) => {});
 
 app.listen(3000);
