@@ -89,7 +89,9 @@ const auth = (req, res, next) => {
   }
 };
 
-app.post("/todo", auth, (req, res) => {});
+app.post("/todo", auth, (req, res) => {
+  const todo = req.body.title;
+});
 
 app.get("/todos", auth, (req, res) => {});
 
