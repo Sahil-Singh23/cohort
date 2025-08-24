@@ -46,7 +46,7 @@ app.post("/signup", async (req, res) => {
       name: name,
     });
   } catch (e) {
-    res.json({ message: "User already exists" });
+    res.status(409).json({ message: "User already exists" });
     return;
   }
 
@@ -69,7 +69,7 @@ app.post("/signin", async (req, res) => {
   const passwordMatch = await bcrypt.compare(password, user.password);
 
   if (passwordMatch) {
-    const token = jwt.sign({ id: user._id }, JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "30d" });
 
     res.json({ message: "you are signed in", token: token });
   } else {
@@ -78,21 +78,45 @@ app.post("/signin", async (req, res) => {
 });
 
 const auth = (req, res, next) => {
-  const token = req.headers.token;
-  const decodedData = jwt.verify(token, JWT_SECRET);
-
-  if (decodedData) {
-    req.userId = decodedData.id;
-    next();
-  } else {
-    res.status(403).json({ message: "You are not logged in" });
+  try {
+    const token = req.headers.token;
+    const decodedData = jwt.verify(token, JWT_SECRET);
+    if (decodedData) {
+      req.userId = decodedData.id;
+      next();
+    } else {
+      return res.status(403).json({ message: "You are not logged in" });
+    }
+  } catch (e) {
+    res.status(403).json({ message: "Invalid or expired token" });
   }
 };
 
-app.post("/todo", auth, (req, res) => {
+app.post("/todo", auth, async (req, res) => {
+  const userId = req.userId;
   const todo = req.body.title;
+  if (todo.length > 1) {
+    const r = await TodoModel.create({
+      title: todo,
+      done: false,
+      userId: userId,
+    });
+    res.json({ message: "New todo Added" });
+    return;
+  }
+  res.json({ message: "Todo is empty" });
 });
 
-app.get("/todos", auth, (req, res) => {});
+app.get("/todos", auth, async (req, res) => {
+  try {
+    const todos = await TodoModel.find({ userId: req.userId });
+    if (!todos || todos.length === 0) {
+      return res.json({ message: "No todos for the user", todos: [] });
+    }
+    res.json({ todos: todos });
+  } catch (e) {
+    res.status(500).json({ message: "Error fetching todos" });
+  }
+});
 
 app.listen(3000);
