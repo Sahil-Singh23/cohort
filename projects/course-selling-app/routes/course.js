@@ -1,6 +1,5 @@
 const express = require("express");
-const Router = express.Router;
-const courseRouter = Router();
+const courseRouter = express.Router();
 
 courseRouter.get("/preview", (req, res) => {});
 
