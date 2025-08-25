@@ -44,7 +44,49 @@ userRouter.post("/signup", async (req, res) => {
   }
 });
 
-userRouter.post("/signin", (req, res) => {});
+userRouter.post("/signin", async (req, res) => {
+  const requiredBody = z.object({
+    email: z.string().email("Email should be a valid email"),
+    password: z
+      .string()
+      .min(6, "Password must have atleast 6 characters")
+      .max(100, "Password can not have more than 100 characters")
+      .regex(/[a-z]/, "Password must contain atleast one lowercase character")
+      .regex(/[A-Z]/, "Password must contain atleast one uppercase character")
+      .regex(/[^ a-zA-Z0-9]/, "Must contain atleast one special character"),
+  });
+
+  const safeParsedBody = requiredBody.safeParse(req.body);
+
+  // returnes the entire error
+  if (!safeParsedBody.success) {
+    return res
+      .status(400)
+      .json({ message: "Incorrect format", error: safeParsedBody.error });
+  }
+
+  const { password, email } = safeParsedBody.data;
+
+  const user = await userModel.findOne({
+    email,
+  });
+
+  if (user) {
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      const token = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_USER_SECRET,
+        { expiresIn: "30d" }
+      );
+      return res.status(200).json({ message: "User is signed in", token });
+    } else {
+      return res.status(403).json({ message: "Password is incorrect" });
+    }
+  } else {
+    return res.status(403).json({ message: "Invalid email" });
+  }
+});
 
 // const auth = async (req, res, next) => {
 //   const token = req.headers.token;
