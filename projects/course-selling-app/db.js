@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const { ObjectId } = mongoose.Schema.Types;
 
 const connectDb = async () => {
   try {
@@ -38,8 +38,8 @@ const courseSchema = new Schema({
 
 const purchasesSchema = new Schema(
   {
-    courseId: { type: ObjectId, ref: "Course", required: true },
-    userId: { type: ObjectId, ref: "User", required: true },
+    courseId: { type: ObjectId, ref: "course", required: true },
+    userId: { type: ObjectId, ref: "user", required: true },
   },
   { timestamps: true }
 );
