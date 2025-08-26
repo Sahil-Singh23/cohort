@@ -104,13 +104,30 @@ adminRouter.post("/signin", async (req, res) => {
 adminRouter.post("/course", adminMiddleware, async (req, res) => {
   const adminId = req.userId;
 
-  const { title, description, price, imageUrl } = req.body;
+  const requiredBody = z.object({
+    title: z.string().min(1).max(100),
+    description: z.string().min(1).max(1000),
+    price: z.number().min(0),
+    imageUrl: z.string(),
+  });
+
+  const safeParsedBody = requiredBody.safeParse(req.body);
+
+  if (!safeParsedBody.success) {
+    return res
+      .status(400)
+      .json({ message: "Incorrect format", error: safeParsedBody.error });
+  }
+
+  const { title, description, price, imageUrl, courseId } = safeParsedBody.data;
+
+  //const { title, description, price, imageUrl } = req.body;
 
   const course = await courseModel.create({
     title,
     description,
     imageUrl,
-    price,
+    price: Number(price),
     creatorId: adminId,
   });
 
@@ -120,11 +137,67 @@ adminRouter.post("/course", adminMiddleware, async (req, res) => {
   });
 });
 
-adminRouter.put("/course", (req, res) => {});
+adminRouter.put("/course", adminMiddleware, async (req, res) => {
+  const adminId = req.userId;
 
-adminRouter.get("/course", (req, res) => {});
+  // Add input validation
+  const requiredBody = z.object({
+    title: z.string().min(1).max(100),
+    description: z.string().min(1).max(1000),
+    price: z.number().min(0),
+    imageUrl: z.string(),
+    courseId: z.string(),
+  });
 
-adminRouter.use;
+  const safeParsedBody = requiredBody.safeParse(req.body);
+
+  if (!safeParsedBody.success) {
+    return res
+      .status(400)
+      .json({ message: "Incorrect format", error: safeParsedBody.error });
+  }
+
+  const { title, description, price, imageUrl, courseId } = safeParsedBody.data;
+
+  try {
+    const course = await courseModel.updateOne(
+      {
+        _id: courseId,
+        creatorId: adminId,
+      },
+      {
+        title,
+        description,
+        imageUrl,
+        price: Number(price),
+        // Remove creatorId from update - it shouldn't change
+      }
+    );
+
+    if (course.modifiedCount > 0) {
+      res.json({
+        message: "Course updated successfully",
+        courseId: courseId, // Use courseId from request, not course._id
+      });
+    } else {
+      res.status(404).json({ message: "Course not found or no changes made" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating course", error: error.message });
+  }
+});
+
+adminRouter.get("/course/bulk", adminMiddleware, async (req, res) => {
+  const adminId = req.userId;
+
+  const adminCourses = await courseModel.find({
+    creatorId: adminId,
+  });
+
+  res.json({ YourCourses: adminCourses });
+});
 
 module.exports = {
   adminRouter: adminRouter,
