@@ -3,7 +3,8 @@ const userRouter = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { z, email } = require("zod");
-const { userModel } = require("../db");
+const { userModel, purchaseModel } = require("../db");
+const { userMiddleware } = require("../middleware/user");
 
 userRouter.post("/signup", async (req, res) => {
   const requiredBody = z.object({
@@ -88,19 +89,17 @@ userRouter.post("/signin", async (req, res) => {
   }
 });
 
-// const auth = async (req, res, next) => {
-//   const token = req.headers.token;
+userRouter.get("/purchases", userMiddleware, async (req, res) => {
+  const userId = req.userId;
 
-//   const decodedToken = jwt.verify(token, jwt_secret);
-//   if (decodedToken) {
-//     req.userId = decodedToken.userId;
-//     next();
-//   } else {
-//     res.status(403).json({ message: "Invalid or expired token " });
-//   }
-// };
+  const purchases = await purchaseModel
+    .find({
+      userId,
+    })
+    .populate("courseId", "title description price imageUrl");
 
-userRouter.get("/purchases", (req, res) => {});
+  res.json({ purchases });
+});
 
 module.exports = {
   userRouter: userRouter,
