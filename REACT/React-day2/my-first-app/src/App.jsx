@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import { set } from "zod";
 
 function App() {
-  return (
-    <>
-      <Counter></Counter>
-    </>
-  );
+  let [counterVisible, setCounterVisible] = useState(true);
+
+  useEffect(() => {
+    setInterval(() => {
+      setCounterVisible((c) => !c);
+    }, 5000);
+  }, []);
+  return <>{counterVisible ? <Counter></Counter> : null} </>;
 }
 //mounting, re-rendering, unmounting
 //for mounting we use the useEffect hook ,
@@ -15,6 +19,7 @@ function Counter() {
   console.log("counter");
 
   //guard our intervals from re renders
+  //is used to mount something to the component
   useEffect(() => {
     setInterval(() => {
       setCount((count) => count + 1);
@@ -32,5 +37,9 @@ function Counter() {
 export default App;
 
 // use state
-// hooks
+// hooks - they hook to life cycle, like use state or use effect
 //use effect
+//cleanup
+//using fetch inside hook
+//conditonal rendering
+//hot module replacement hmr
