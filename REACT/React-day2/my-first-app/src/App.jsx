@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   return (
@@ -7,14 +7,20 @@ function App() {
     </>
   );
 }
-
+//mounting, re-rendering, unmounting
+//for mounting we use the useEffect hook ,
+//lifecycle events
 function Counter() {
   const [count, setCount] = useState(0);
-
-  setTimeout(() => {
-    setCount(count + 1);
-  }, 1000);
   console.log("counter");
+
+  //guard our intervals from re renders
+  useEffect(() => {
+    setInterval(() => {
+      setCount((count) => count + 1);
+    }, 1000);
+    console.log("mounted");
+  }, []); // dependacny array
 
   return (
     <div>
