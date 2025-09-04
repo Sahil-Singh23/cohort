@@ -8,7 +8,7 @@ function App() {
   const [xIsNext, setXIsNext] = useState(true);
 
   function onSquareClick(i) {
-    if (state[i]) return;
+    if (state[i] || calculateWinner(state)) return;
     const newArr = state.slice();
 
     if (xIsNext) {
