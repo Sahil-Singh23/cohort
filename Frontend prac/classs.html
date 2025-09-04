@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      td,
+      tr,
+      th,
+      table {
+        text-align: center;
+        border: solid;
+        border-collapse: collapse;
+        border-radius: 4px;
+        padding: 7px;
+        font-size: 20px;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        margin-top: 120px;
+        display: flex;
+        justify-content: space-evenly;
+        background-color: wheat;
+      }
+      button {
+        height: 35;
+        width: 120;
+        border-radius: 8px;
+        background-color: #84593d;
+        color: white;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <table>
+        <tr>
+          <th>Meal</th>
+          <th>Meal Time</th>
+        </tr>
+
+        <tr>
+          <td>Apple</td>
+          <td id="apple">Morning, Evening</td>
+        </tr>
+        <tr>
+          <td>Pineapple</td>
+          <td id="pineapple">AfterNoon, Evening</td>
+        </tr>
+        <tr>
+          <td>Banana</td>
+          <td id="banana">Morning, Night</td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="t1"
+              id="text1"
+              placeholder="What you want to eat!"
+            />
+          </td>
+          <td><button type="button" onclick="display()">Get Meal</button></td>
+        </tr>
+      </table>
+      <div id="meal-div"></div>
+    </form>
+
+    <script>
+      function display() {
+        const val = document.getElementById("text1").value.toLowerCase();
+        const mealtime = document.getElementById(val);
+        console.log(mealtime);
+        const p = document.createElement("p");
+        if (mealtime) {
+          const time = mealtime.innerText;
+          p.innerText = `Your meal time is ${time}`;
+          document.getElementById("text1").innerHTML = "";
+        } else {
+          p.innerText = `Please enter a food from the list`;
+          document.getElementById("text1").innerHTML = "";
+        }
+        const mealDiv = document.getElementById("meal-div");
+        mealDiv.innerHTML = "";
+        mealDiv.appendChild(p);
+      }
+    </script>
+  </body>
+</html>

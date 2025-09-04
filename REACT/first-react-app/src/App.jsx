@@ -5,14 +5,28 @@ import "./App.css";
 
 function App() {
   const [state, setState] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
 
   function onSquareClick(i) {
+    if (state[i]) return;
     const newArr = state.slice();
-    newArr[i] = "x";
+
+    if (xIsNext) {
+      newArr[i] = "x";
+    } else {
+      newArr[i] = "0";
+    }
+    setXIsNext(!xIsNext);
     setState(newArr);
   }
+  const winner = calculateWinner(state);
+  let status = winner
+    ? `Winner is ${winner}`
+    : `Next player is ${xIsNext ? "X" : "O"}`;
+
   return (
     <>
+      <div>{status}</div>
       <div className="board-row">
         <Square count={state[0]} onClick={() => onSquareClick(0)}></Square>
         <Square count={state[1]} onClick={() => onSquareClick(1)}></Square>
@@ -39,6 +53,26 @@ function Square(props) {
       </button>
     </>
   );
+}
+
+function calculateWinner(Squares) {
+  const winArray = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < winArray.length; i++) {
+    const [a, b, c] = winArray[i];
+    if (Squares[a] && Squares[a] === Squares[b] && Squares[a] === Squares[c]) {
+      return Squares[a];
+    }
+  }
+  return null;
 }
 
 export default App;
