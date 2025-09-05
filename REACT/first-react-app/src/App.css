@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+.board-row {
+  display: flex;
+}
+.button {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  margin: 5px;
+  cursor: pointer;
+
+  display: flex; /* make the button a flex container */
+  align-items: center; /* center vertically */
+  justify-content: center; /* center horizontally */
+}
