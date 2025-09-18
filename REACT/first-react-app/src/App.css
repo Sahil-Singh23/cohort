@@ -54,3 +54,14 @@
   align-items: center; /* center vertically */
   justify-content: center; /* center horizontally */
 }
+body {
+  background: #57bdb5;
+  min-height: 100vh;
+  margin: 0;
+  /* font-family: "JetBrains Mono", "Fira Mono", "Menlo", monospace; */
+}
+.game {
+  display: flex; /* make the button a flex container */
+  align-items: center; /* center vertically */
+  justify-content: center; /* center horizontally */
+}
