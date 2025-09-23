@@ -1,37 +1,34 @@
-import { use, useEffect, useState } from "react";
+import { use, useDebugValue, useEffect, useState } from "react";
 
 //Re - learning cleanup, useEffect, learning about dependancy array
 function App() {
-  const [count, setCount] = useState(0);
-  const [count2, setCount2] = useState(0);
-
-  function increase() {
-    setCount((count) => count + 1);
-  }
-  function decrease() {
-    setCount2((count) => count - 1);
-  }
-
   return (
     <>
-      <Counter count={count} count2={count2}></Counter>
-      <div>
-        <button onClick={increase}>Increase</button>
-        <button onClick={decrease}>Decrease</button>
-      </div>
+      <Card>
+        <h2>Card one</h2>
+        <p>Gold mine, kodi nani neko</p>
+      </Card>
+      <Card>
+        <h2>Another card</h2>
+        <p>Baka ka omyera</p>
+      </Card>
     </>
   );
 }
 
-function Counter({ count, count2 }) {
-  useEffect(() => {
-    console.log("count has changed");
-  }, [count, count2]);
+function Card({ children }) {
   return (
-    <>
-      Counter {count}
-      Counter {count2}
-    </>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        padding: "20px",
+        margin: "10px",
+        boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
