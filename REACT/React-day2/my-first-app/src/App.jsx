@@ -2,18 +2,30 @@ import { use, useDebugValue, useEffect, useState } from "react";
 
 //Re - learning cleanup, useEffect, learning about dependancy array
 function App() {
-  return (
-    <>
-      <Card>
-        <h2>Card one</h2>
-        <p>Gold mine, kodi nani neko</p>
-      </Card>
-      <Card>
-        <h2>Another card</h2>
-        <p>Baka ka omyera</p>
-      </Card>
-    </>
-  );
+  const todos = [
+    {
+      title: "Hit the gym",
+      done: true,
+    },
+    {
+      title: "Write assignements",
+      done: false,
+    },
+    {
+      title: "Submit pull request",
+      done: true,
+    },
+  ];
+
+  const todoComp = todos.map((todo, index) => (
+    <Card key={index}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <h2>{todo.title}</h2>
+        <input type="checkbox" checked={todo.done} readOnly />
+      </div>
+    </Card>
+  ));
+  return <>{todoComp}</>;
 }
 
 function Card({ children }) {
