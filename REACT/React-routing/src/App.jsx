@@ -41,3 +41,45 @@ function Main() {
 }
 
 export default App;
+// Lazy loading with Suspense
+import { lazy, Suspense } from "react";
+
+const LazyComponent = lazy(() => import("./LazyComponent"));
+
+function AppWithLazyLoading() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/lazy"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <LazyComponent />
+            </Suspense>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+// Multiple layouts
+function AppWithLayouts() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+        </Route>
+
+        {/* Admin routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
