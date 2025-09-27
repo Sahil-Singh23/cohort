@@ -1,57 +1,19 @@
 import { useState } from "react";
 import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  Outlet,
-} from "react-router-dom";
-import { useEffect } from "react";
+import { useRef } from "react";
 
 function App() {
+  const inputref = useRef();
+  const focusOnInput = () => {
+    inputref.current.focus();
+  };
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout></Layout>}>
-            <Route path="/" element={<Main></Main>}></Route>
-            <Route path="/home" element={<Home></Home>}></Route>
-            <Route path="*" element={<ErrorPage> </ErrorPage>}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <input type="text" ref={inputref}></input>
+      <input type="text"></input>
+      <button onClick={focusOnInput}>Submit</button>
     </>
   );
-}
-
-function Layout() {
-  return (
-    <>
-      <div>
-        <Link to="/">Main </Link> |<Link to="/home"> Home</Link>
-      </div>
-      <Outlet></Outlet>
-      <div>Footer | Contact us</div>
-    </>
-  );
-}
-function Home() {
-  return <>Hi there!</>;
-}
-
-function Main() {
-  const nav = useNavigate();
-  useEffect(() => {
-    setTimeout(() => {
-      nav("/home");
-    }, 3000);
-  }, []);
-  return <>Welcome to my website !</>;
-}
-function ErrorPage() {
-  return <>Page not found</>;
 }
 
 export default App;
