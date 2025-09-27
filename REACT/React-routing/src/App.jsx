@@ -1,17 +1,27 @@
 import { useState } from "react";
 import "./App.css";
 import { useRef } from "react";
+import { set } from "zod";
 
 function App() {
-  const inputref = useRef();
-  const focusOnInput = () => {
-    inputref.current.focus();
-  };
+  const [cur, setCur] = useState(0);
+  const timer = useRef();
+
+  function startClock() {
+    timer.current = setInterval(() => {
+      setCur((c) => c + 1);
+    }, 1000);
+  }
+
+  function stopClock() {
+    clearInterval(timer.current);
+  }
+
   return (
     <>
-      <input type="text" ref={inputref}></input>
-      <input type="text"></input>
-      <button onClick={focusOnInput}>Submit</button>
+      <div>{cur}</div>
+      <button onClick={startClock}>Start</button>
+      <button onClick={stopClock}>Stop</button>
     </>
   );
 }
