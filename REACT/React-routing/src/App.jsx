@@ -6,6 +6,7 @@ import {
   Route,
   Link,
   useNavigate,
+  Outlet,
 } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -13,19 +14,29 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <div>
-          <Link to="/">Main </Link> |<Link to="/home"> Home</Link>
-        </div>
         <Routes>
-          <Route path="/" element={<Main></Main>}></Route>
-          <Route path="/home" element={<Home></Home>}></Route>
-          <Route path="*" element={<ErrorPage> </ErrorPage>}></Route>
+          <Route path="/" element={<Layout></Layout>}>
+            <Route path="/" element={<Main></Main>}></Route>
+            <Route path="/home" element={<Home></Home>}></Route>
+            <Route path="*" element={<ErrorPage> </ErrorPage>}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
   );
 }
 
+function Layout() {
+  return (
+    <>
+      <div>
+        <Link to="/">Main </Link> |<Link to="/home"> Home</Link>
+      </div>
+      <Outlet></Outlet>
+      <div>Footer | Contact us</div>
+    </>
+  );
+}
 function Home() {
   return <>Hi there!</>;
 }
@@ -39,47 +50,8 @@ function Main() {
   }, []);
   return <>Welcome to my website !</>;
 }
+function ErrorPage() {
+  return <>Page not found</>;
+}
 
 export default App;
-// Lazy loading with Suspense
-import { lazy, Suspense } from "react";
-
-const LazyComponent = lazy(() => import("./LazyComponent"));
-
-function AppWithLazyLoading() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/lazy"
-          element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <LazyComponent />
-            </Suspense>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-// Multiple layouts
-function AppWithLayouts() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<PublicLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-        </Route>
-
-        {/* Admin routes */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="users" element={<AdminUsers />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
