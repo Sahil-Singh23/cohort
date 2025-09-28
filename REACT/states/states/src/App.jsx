@@ -1,31 +1,42 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
+const BulbContext = createContext();
+
 function App() {
+  const [bulbOn, setBuldOn] = useState(true);
   return (
     <div>
-      <LightBulb></LightBulb>
+      <BulbContext.Provider
+        value={{
+          bulbOn: bulbOn,
+          setBuldOn: setBuldOn,
+        }}
+      >
+        <LightBulb></LightBulb>
+      </BulbContext.Provider>
     </div>
   );
 }
 
 function LightBulb() {
-  const [bulbOn, setBuldOn] = useState(true);
   return (
     <div>
-      <BulbState bulbOn={bulbOn}></BulbState>
-      <ToggleBulbState setBuldOn={setBuldOn}></ToggleBulbState>
+      <BulbState></BulbState>
+      <ToggleBulbState></ToggleBulbState>
     </div>
   );
 }
 
-function BulbState({ bulbOn }) {
+function BulbState() {
+  const { bulbOn } = useContext(BulbContext);
   return <div>{bulbOn ? "Bulb on" : "Bulb off"} </div>;
 }
 
-function ToggleBulbState({ setBuldOn }) {
+function ToggleBulbState() {
+  const { setBuldOn } = useContext(BulbContext);
   function toggle() {
     setBuldOn((c) => !c);
   }
