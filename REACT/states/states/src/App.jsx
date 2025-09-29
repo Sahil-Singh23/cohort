@@ -1,22 +1,30 @@
 import { createContext, useContext, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 const BulbContext = createContext();
 
-function App() {
+export function BulbProvider({ children }) {
   const [bulbOn, setBuldOn] = useState(true);
   return (
-    <div>
+    <>
       <BulbContext.Provider
         value={{
           bulbOn: bulbOn,
           setBuldOn: setBuldOn,
         }}
       >
-        <LightBulb></LightBulb>
+        {children}
       </BulbContext.Provider>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <BulbProvider>
+        <LightBulb></LightBulb>
+      </BulbProvider>
     </div>
   );
 }
