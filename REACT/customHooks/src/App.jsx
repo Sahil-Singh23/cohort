@@ -1,34 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-
-function useCounter() {
-  const [count, setCount] = useState(0);
-  const increaseCount = () => {
-    setCount((c) => c + 1);
-  };
-  return { count: count, increaseCount: increaseCount };
-}
+import { useEffect } from "react";
+import { useFetch } from "./hooks/useFetch";
 
 function App() {
-  return (
-    <div>
-      <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
-    </div>
-  );
-}
+  const { post } = useFetch("https://jsonplaceholder.typicode.com/todos/5");
 
-function Counter() {
-  const { count, increaseCount } = useCounter();
-
-  return (
-    <div>
-      <button onClick={increaseCount}>Increase {count}</button>
-    </div>
-  );
+  return <div>{post.title}</div>;
 }
 
 export default App;
