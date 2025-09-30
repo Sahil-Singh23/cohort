@@ -16,5 +16,12 @@ export function useFetch(url) {
     getPosts();
   }, [url]);
 
+  useEffect(() => {
+    const refecth = setInterval(getPosts, 10 * 1000);
+    return () => {
+      clearInterval(refecth);
+    };
+  }, [url]);
+
   return { post, loading };
 }
