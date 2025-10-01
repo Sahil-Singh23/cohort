@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => setState((c) => c + 1)}>Increase{state}</button>
+      <button onClick={() => setState((c) => c + 1)}>Increase {state}</button>
       <div>{prev}</div>
     </div>
   );
