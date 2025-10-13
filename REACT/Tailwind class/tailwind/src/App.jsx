@@ -1,19 +1,12 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <div className="flex justify-around">
-        <div>
-          <div className="bg-blue-200">hello</div>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="bg-blue-200">hello</div>
-          <div className="bg-blue-200">hello</div>
-        </div>
+      <div className="flex flex-col sm:flex-row sm:justify-around ">
+        <div className="bg-[#967969] w-40%">hello</div>
+        <div className="bg-red-200 w-40%">hello</div>
+        <div className="bg-green-200 w-20%">hello</div>
       </div>
     </>
   );
