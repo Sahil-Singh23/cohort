@@ -1,21 +1,8 @@
 
-const greet = (user :String) =>{
-    console.log('hello '+user);
-}
-greet("Sahil");
 
-const sum = (a:number,b:number):number=>{
-    return a+b;
+function delayedCall(fn : ()=> void){
+    setTimeout(fn,2000);
 }
-const isLegal= (age: number)=>{
-    return age>=18?true:false;
-}
-
-let ans = sum(1,2);
-console.log(ans);
-console.log(isLegal(18));
-//number,string,any
-
-function delayedCall(fn: any){
-
-}
+delayedCall(()=>{
+    console.log('Hello after 2 seconds');
+})
