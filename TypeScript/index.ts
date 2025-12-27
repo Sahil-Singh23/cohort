@@ -37,18 +37,14 @@
 // const max = getMax([10, 20, 40, 60]);
 // console.log(max);
 
-interface User{
+type User = {
     firstname: string;
     lastname: string;
     age: number;
 }
 
 function isLegal(users: User[]): User[]{
-    const legals: User[] = new Array();
-    for(const user of users){
-        if(user.age>=18) legals.push(user); 
-    }
-    return legals;
+    return users.filter((u)=>u.age>=18);
 }
 
 const users: User[] = [{
@@ -66,7 +62,7 @@ const users: User[] = [{
 },{
     firstname:"Mika",
     lastname:"Singh",
-    age:14
+    age:14,
 }]
 
 console.log(isLegal(users));

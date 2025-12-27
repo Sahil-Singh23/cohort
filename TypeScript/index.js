@@ -13,12 +13,7 @@
 // class Manager implements User{
 Object.defineProperty(exports, "__esModule", { value: true });
 function isLegal(users) {
-    const legals = new Array();
-    for (const user of users) {
-        if (user.age >= 18)
-            legals.push(user);
-    }
-    return legals;
+    return users.filter((u) => u.age >= 18);
 }
 const users = [{
         firstname: "Sahil",
