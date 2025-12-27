@@ -26,13 +26,47 @@
 // console.log(person.isLegal());
 
 
-function getMax(nums: number[]): number{
-    let max: number = 0;
-    for(const num of nums){
-        if(num > max) max = num;
-    }
-    return max;
+// function getMax(nums: number[]): number{
+//     let max: number = 0;
+//     for(const num of nums){
+//         if(num > max) max = num;
+//     }
+//     return max;
+// }
+
+// const max = getMax([10, 20, 40, 60]);
+// console.log(max);
+
+interface User{
+    firstname: string;
+    lastname: string;
+    age: number;
 }
 
-const max = getMax([10, 20, 40, 60]);
-console.log(max);
+function isLegal(users: User[]): User[]{
+    const legals: User[] = new Array();
+    for(const user of users){
+        if(user.age>=18) legals.push(user); 
+    }
+    return legals;
+}
+
+const users: User[] = [{
+    firstname:"Sahil",
+    lastname:"Singh",
+    age:20
+},{
+    firstname:"Sneha",
+    lastname:"Singh",
+    age:20
+},{
+    firstname:"Jagat",
+    lastname:"Singh",
+    age:40
+},{
+    firstname:"Mika",
+    lastname:"Singh",
+    age:14
+}]
+
+console.log(isLegal(users));
