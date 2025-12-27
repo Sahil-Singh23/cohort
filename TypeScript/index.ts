@@ -1,14 +1,20 @@
 //object as input
-interface userType{
+interface Address{
+    city: String,
+    pin: number
+}
+interface User{
     name:String,
-    age:number
+    age:number,
+    address?:Address,
+    //greet: () => string,
 }
-function greet(user: userType) :void{
-    console.log(user.name);
-    console.log(user.age);
+
+class Manager implements User{
+    name: string;
+    age: number;
+    constructor(name: string,age:number){
+        this.name= name;
+        this.age = age;
+    } 
 }
-let user:userType = {
-    name:'Sahil',
-    age:20
-}
-greet(user);
