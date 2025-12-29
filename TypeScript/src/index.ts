@@ -1,33 +1,30 @@
-// interface User{
-//     email: string,
-//     name: string,
-//     age: number,
-//     id: number,
-//     password: string
-// }
+import { z } from 'zod';
+import express from "express";
 
-// type updateProps = Pick<User,'name'|'age'|'email'>
+const app = express();
 
-// type updatedPropsOptional = Partial<updateProps>;
- 
-// function updateUser(updatedProps: updatedPropsOptional ){
-//     //hit the database to update the user    
-// }
+// Define the schema for profile update
+const userProfileSchema = z.object({
+  name: z.string().min(1, { message: "Name cannot be empty" }),
+  email: z.string().email({ message: "Invalid email format" }),
+  age: z.number().min(18, { message: "You must be at least 18 years old" }).optional(),
+});
 
-// function sumOfage(user1: User, user2: User):number{
-//     return user1.age+user2.age;
-// }
+// Infer the type from the schema
+type UserProfile = z.infer<typeof userProfileSchema>;
 
-// // console.log(sumOfage({name:"sahil",age:20},{name:"mike",age:35}));  
+app.put("/user", (req, res) => {
+  const { success, data } = userProfileSchema.safeParse(req.body);
+  const updateBody: UserProfile = req.body; // Now properly typed!
 
+  if (!success) {
+    res.status(411).json({});
+    return
+  }
+  // update database here
+  res.json({
+    message: "User updated"
+  })
+});
 
-type User={
-    name: string,
-    age: number,
-}
-
-const usr: Readonly<User>={
-    name: 'John',
-    age: 21,
-}
-usr.age= 14; // fails as age is read only 
+app.listen(3000);
