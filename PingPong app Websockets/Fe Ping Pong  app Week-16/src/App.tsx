@@ -12,7 +12,7 @@ function App() {
 
       socket.current.onmessage = (e)=>{
         //console.log(e);
-        alert(e.data);
+        alert (e.data);
       }
 
       return()=>{
