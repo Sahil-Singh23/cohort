@@ -69,7 +69,7 @@ COHORT/
 │   ├── week-7/               # WebSockets
 │   ├── week-9/               # React Projects
 │   ├── week-10/              # Advanced Backend
-│   ├── week-11/              # Database & Authentication
+│   ├── week-11/              # Datab   ase & Authentication
 │   ├── week-13/              # TypeScript Fundamentals
 │   ├── week-14/              # Advanced TypeScript
 │   ├── week-17/              # Testing & Quality
