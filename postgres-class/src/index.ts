@@ -41,11 +41,11 @@ app.get("/metadata", async(req,res)=>{
 
 
     //do not expose your password
-    const query = "SELECT users.id,username,email,user_id,city,country,street,pincode from users JOIN addresses on users.id=addresses.user_id where users.id = $1";
+    const query = "SELECT users.id,username,email,user_id,city,country,street,pincode from users LEFT  JOIN addresses on users.id=addresses.user_id where users.id = $1";
 
     try{
         const response = await pgClient.query(query,[id]);
-        return res.json({response:response.rows[0]})
+        return res.json({response:response.rows  })
     }catch(e){
         console.log(e);
         return res.status(401).json({message:"Error getting data "})
