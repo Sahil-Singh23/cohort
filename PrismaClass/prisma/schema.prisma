@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -13,14 +13,16 @@ model User{
   password String
   age Int 
   city String?
+  todos Todos[]
 
 }
 
-model todos{
+model Todos{
   id Int @default(autoincrement()) @id
   title String
   desc String
   done Boolean
   userId Int
   time DateTime @default(now())
+  user User @relation(fields: [userId],references: [id ])
 }
