@@ -43,7 +43,6 @@ async function create() {
     })    
 }
 
-
 async function read() {
     const res = await client.todos.findMany({
     where: { id: 1 },
@@ -80,7 +79,6 @@ async function read() {
     console.log(res2);
 }
 
-
 async function update() {
     const res = await client.user.update({
         where:{id:1},
@@ -98,11 +96,28 @@ async function deleteTodo(){
     console.log(res);
 }
 
+async function rawQueries() {
+    const res = await client.$queryRaw`SELECT * FROM users`;
+    console.log("Raw query response");
+    console.log(res);
+}
+
+
+
 async function main() {
   await create();
+  console.log("---- CREATE DONE ----");
+
   await read();
+  console.log("---- READ DONE ----");
+
   await update();
+  console.log("---- UPDATE DONE ----");
+
   await deleteTodo();
+  console.log("---- DELETE DONE ----");
+  await rawQueries();
+  console.log("---- RAW QUERY DONE ----");
 }
 
 main();
