@@ -1,8 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from './generated/prisma/client.js'
 
-const client = new PrismaClient({
-  log: ['query']
-});
+const connectionString = `${process.env.DATABASE_URL}`
+
+const adapter = new PrismaPg({ connectionString })
+const client = new PrismaClient({ adapter, log: ['query'] })
 
 async function create() {
     await client.user.create({
@@ -22,7 +25,7 @@ async function create() {
             title: "hit the gym",
             desc: "at 6 pm",
             done: false,
-            userId: 1
+            userId: 5
         }
     })
     await client.todos.create({
@@ -30,7 +33,7 @@ async function create() {
             title: "study next js",
             desc: "at 12 pm",
             done: false,
-            userId: 1
+            userId: 5
         }
     })
     await client.todos.create({
@@ -38,14 +41,14 @@ async function create() {
             title: "study redux ",
             desc: "at 1 pm",
             done: false,
-            userId: 2
+            userId: 6
         }
     })    
 }
 
 async function read() {
     const res = await client.todos.findMany({
-    where: { id: 1 },
+    where: { id: 3 },
     include: {
       user: {
         select: {
@@ -58,7 +61,7 @@ async function read() {
     }
   });
   const res2 = await client.todos.findMany({
-        where: { id: 1 },
+        where: { id: 3 },
         select: {
             id: true,
             title: true,
@@ -81,7 +84,7 @@ async function read() {
 
 async function update() {
     const res = await client.user.update({
-        where:{id:1},
+        where:{id:5},
         data:{
             "age":32
         }
@@ -91,17 +94,17 @@ async function update() {
 
 async function deleteTodo(){
     const res =  await client.todos.delete({
-        where:{id:2},
+        where:{id:3},
     })
     console.log(res);
 }
 
 async function rawQueries() {
-    const res = await client.$queryRaw`SELECT * FROM users`;
+    const res = await client.$queryRaw`SELECT * FROM User`;
     console.log("Raw query response");
     console.log(res);
     const count = await client.$executeRaw`
-        DELETE FROM "Todos" WHERE id = 3;
+        DELETE FROM "Todos" WHERE id = 4;
         `;
     console.log(count); 
 
