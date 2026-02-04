@@ -1,8 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { client } from './lib/prisma.js'
 
-const client = new PrismaClient({
-  log: ['query']
-});
 
 async function create() {
     await client.user.create({
