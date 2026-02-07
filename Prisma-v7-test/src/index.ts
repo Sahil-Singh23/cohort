@@ -1,6 +1,5 @@
 import { client } from './lib/prisma.js'
 
-
 async function create() {
     await client.user.create({
         data:{
