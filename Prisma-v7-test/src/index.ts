@@ -123,3 +123,94 @@ async function main() {
 }
 
 main();
+
+
+
+
+
+//waterfalling
+//hydration error 
+// file based routing
+// 
+// ### **What is Hydration Error?**
+
+// A hydration error occurs when the HTML rendered on the server doesn't match the HTML rendered on the client during the hydration process.
+
+// Hydration is the process where React attaches event listeners and makes the server-rendered HTML interactive on the client side.
+
+// ### **Common Causes**
+
+// 1. Using browser-only APIs (like `window` or `localStorage`) during server-side rendering
+// 2. Conditional rendering that differs between server and client
+// 3. Using random values or dates that generate different content on server vs client
+// 4. Incorrect nesting of HTML elements (like `&lt;p&gt;` inside `&lt;p&gt;`)
+
+// ### **Example of Hydration Error**
+
+// ```tsx
+// // ❌ This will cause a hydration error
+// export default function Page() {
+//   return (
+//     <div>
+//       <h1>Current time: {new Date().toLocaleTimeString()}</h1>
+//     </div>
+//   );
+// }
+
+// // The time will be different on server vs client!
+// ```
+
+// ### **Solution - Use Client Components**
+
+// ```tsx
+// // ✅ Correct approach using useEffect
+// 'use client';
+
+// import { useState, useEffect } from 'react';
+
+// export default function Page() {
+//   const [time, setTime] = useState('');
+
+//   useEffect(() => {
+//     setTime(new Date().toLocaleTimeString());
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>Current time: {time || 'Loading...'}</h1>
+//     </div>
+//   );
+// }
+// ```
+
+// ### **Another Example - Using window object**
+
+// ```tsx
+// // ❌ This will cause a hydration error
+// export default function Page() {
+//   const width = window.innerWidth; // window is undefined on server
+
+//   return <div>Width: {width}px</div>;
+// }
+
+// // ✅ Correct approach
+// 'use client';
+
+// import { useState, useEffect } from 'react';
+
+// export default function Page() {
+//   const [width, setWidth] = useState(0);
+
+//   useEffect(() => {
+//     setWidth(window.innerWidth);
+//   }, []);
+
+//   return <div>Width: {width}px</div>;
+// }
+// ```
+
+// <aside>
+
+// Remember: Any code that relies on browser APIs or generates dynamic content should be wrapped in `useEffect` or use the `'use client'` directive to avoid hydration mismatches.
+
+// </aside>
