@@ -5,7 +5,7 @@ export default async function User() {
   await new Promise(resolve => setTimeout(resolve, 3000));
 
   const res = await fetch(
-    "https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details"
+    "http://localhost:3000/api/v1/user/details"
   );
   const data = await res.json();
 
@@ -14,12 +14,12 @@ export default async function User() {
         <div className="flex justify-center">
             <div className="border p-8 rounded">
                 <div>
-                    Name: {data?.name}
+                    Name: {data?.user}
                 </div>
                 
                 {data?.email}
             </div>
-        </div>
+        </div> 
     </div>
   );
 }
