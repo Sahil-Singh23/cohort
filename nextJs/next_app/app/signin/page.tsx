@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+
 const SignIn = () => {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -34,9 +36,9 @@ const SignIn = () => {
         </div>
         
         <div className="mt-8 pt-6 border-t border-white/20 text-center">
-          <p className="text-xs text-white/40">
+          <Link href={"/signup"} className="text-xs text-white/40">
             Don't have an account? Sign up instead
-          </p>
+          </Link>
         </div>
       </div>
     </div>
