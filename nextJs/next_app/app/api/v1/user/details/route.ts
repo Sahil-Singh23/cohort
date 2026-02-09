@@ -13,3 +13,17 @@ export function POST(){
     email: "sahil1@gmail.com"
   })
 }
+
+export function DELETE(){
+  return NextResponse.json({
+    user: "sahil",
+    email: "sahil1@gmail.com"
+  })
+}
+
+export function PUT(){
+  return NextResponse.json({
+    user: "sahil",
+    email: "sahil1@gmail.com"
+  })
+}
