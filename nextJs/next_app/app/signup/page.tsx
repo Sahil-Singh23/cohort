@@ -46,7 +46,7 @@ const SignUp = () => {
             Sign up
           </button>
         </div>
-        
+         
         <div className="mt-8 pt-6 border-t border-white/20 text-center">
           <Link href={"/signin"} className="text-xs text-white/40">
             Already have an account? Sign in instead
