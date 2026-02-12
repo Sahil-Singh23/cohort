@@ -1,8 +1,7 @@
 
 
 export default async function BlogPostPage({params}:{params:Promise<{postID:string}>}){
-    const resolvedParams = await params;
-    const postId = resolvedParams.postID;
+    const postId = (await params).postID; 
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
     const data = await response.json();
 
