@@ -11,4 +11,4 @@ export default async function({params}:{params:Promise<{courseId:String,courses:
             <div>{JSON.stringify(courses)}</div>
         </div>
     )
-}
+} 
