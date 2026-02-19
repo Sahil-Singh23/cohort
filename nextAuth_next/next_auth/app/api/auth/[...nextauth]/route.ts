@@ -1,5 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 import AppleProvider from "next-auth/providers/apple";
+import GoogleProvider from "next-auth/providers/google";
+
 import NextAuth from "next-auth"
 
 const handler = NextAuth({
@@ -42,6 +44,10 @@ const handler = NextAuth({
   AppleProvider({
     clientId: process.env.APPLE_ID ||"",
     clientSecret: process.env.APPLE_SECRET ||""
+  }),
+  GoogleProvider({
+    clientId: "asda",
+    clientSecret: "sad"
   })
 ]
 })
