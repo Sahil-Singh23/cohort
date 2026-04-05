@@ -28,7 +28,8 @@ const handler = NextAuth({
     const user = {
         name: "sahil",
         id:"1",
-        username:"sah1l"
+        username:"sah1l",
+        email: "dasdf@gmail.com"
 
     }
       //const user = await res.json()
