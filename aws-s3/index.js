@@ -31,6 +31,9 @@ async function putObjectUrl(key,filetype) {
 
 async function init() {
     console.log('URL for graphql.jpeg',await getObjectURL('graphql.jpeg'));
+
+    console.log("url for put",await putObjectUrl())
+
 }
 
 init();
